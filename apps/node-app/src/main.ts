@@ -4,14 +4,20 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import { typeDefs } from './graphql/typeDefs';
-import { resolvers } from './graphql/resolvers';
+import { EarthquakeDataSource } from './dataSources/EarthquakeDataSource';
+import resolvers from './graphql/resolvers';
+import typeDefs from './graphql/types/typeDefs';
 
 interface Context {
-  token?: string;
+  dataSources?: typeof EarthquakeDataSource;
 }
 
-const port = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000
+const APP_URL = process.env.APP_URL
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_NAME = process.env.MONGODB_NAME;
+
+const earthquakeDataSource = new EarthquakeDataSource(MONGODB_URI, MONGODB_NAME)
 const app = express()
 const httpServer = http.createServer(app);
 const server = new ApolloServer<Context>({
@@ -21,10 +27,12 @@ const server = new ApolloServer<Context>({
 });
 
 async function startApolloServer() {
+  await earthquakeDataSource.initialize();
+
   try {
     await server.start();
   } catch (e) {
-    console.error(e || 'Something went wrong while starting ApolloServer');
+    console.error(e || 'Something went wrong while starting server');
   }
 
   app.use(
@@ -32,14 +40,16 @@ async function startApolloServer() {
     cors<cors.CorsRequest>(),
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.token }),
-    }),
+      context: async () => ({
+        dataSources: {
+          earthquakeDataSource
+        },
+      }),
+    })
   );
 
-  app.use('/graphql', express.json(), expressMiddleware(server));
-
-  httpServer.listen({ port }, () => {
-    console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+  httpServer.listen({ port: PORT }, () => {
+    console.log(`🚀 Server ready at ${APP_URL}:${PORT}/graphql`);
   })
 }
 
