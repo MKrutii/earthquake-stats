@@ -53,6 +53,12 @@
           "buildTarget": "node-app:build:production"
         }
       }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env NODE_ENV=development ts-node apps/node-app/src/migration/initScript.ts"
+      }
     }
   }
 }
