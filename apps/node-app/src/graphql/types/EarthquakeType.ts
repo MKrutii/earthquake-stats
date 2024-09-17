@@ -9,7 +9,7 @@ export default gql`
   }
 
   type Query {
-    getEarthquakes: [Earthquake!]!
+    earthquakes: [Earthquake!]!
   }
 
   type Mutation {

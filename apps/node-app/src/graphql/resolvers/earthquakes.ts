@@ -1,6 +1,6 @@
 export default {
   Query: {
-    getEarthquakes: async (_: any, __: any, { dataSources }: any) => {
+    earthquakes: async (_: unknown, __: any, { dataSources }: any) => {
       return dataSources.earthquakeDataSource.getAllEarthquakes();
     },
   },

@@ -1,15 +1,19 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import './styles.css';
+import Providers from '@/components/Providers/Providers';
+
+import '@/styles/globals.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to react-app!</title>
+        <title>Earthquake Stats</title>
       </Head>
       <main className="app">
-        <Component {...pageProps} />
+        <Providers>
+          <Component {...pageProps} />
+        </Providers>
       </main>
     </>
   );

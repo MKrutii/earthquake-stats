@@ -35,7 +35,8 @@ export class EarthquakeDataSource {
   }
 
   async getAllEarthquakes(): Promise<Earthquake[]> {
-    return this.getCollection().find().toArray();
+    const result = await this.getCollection().find().toArray()
+    return result.map(({ _id, ...rest }) => ({ id: _id.toString(), ...rest }));
   }
 
   async createEarthquake(earthquake: OptionalId<Earthquake>): Promise<Earthquake> {
