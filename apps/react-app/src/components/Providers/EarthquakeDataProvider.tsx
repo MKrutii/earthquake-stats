@@ -17,7 +17,6 @@ export default function EarthquakeDataProvider({ children }: PropsWithChildren) 
   const { loading, data, error } = useQuery(GET_EARTHQUAKES_QUERY, {
     errorPolicy: 'all',
     onError: (err) => {
-      // TODO: Improve error handling
       console.error(err)
     },
   })
