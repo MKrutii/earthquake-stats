@@ -1,8 +1,8 @@
-import React, { PropsWithChildren, useContext, useMemo } from 'react';
+import React, { PropsWithChildren, useContext, useMemo } from 'react'
 
-import { useQuery } from '@apollo/client';
-import { GET_EARTHQUAKES_QUERY } from '@/graphql/earthquake';
-import { Earthquake } from '@/types/earthquake';
+import { useQuery } from '@apollo/client'
+import { GET_EARTHQUAKES_QUERY } from '@/graphql/earthquake'
+import { Earthquake } from '@/types/earthquake'
 
 interface EarthquakeDataProviderValue {
   isLoading: boolean

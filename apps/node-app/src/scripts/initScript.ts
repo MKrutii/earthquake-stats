@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require('mongodb')
 const { config } = require('dotenv')
-const fs = require('fs');
-const csv = require('csv-parser');
-const path = require('path');
+const fs = require('fs')
+const csv = require('csv-parser')
+const path = require('path')
 
-config({ path: ['.env.local', '.env', '.env.production'] });
+config({ path: ['.env.local', '.env', '.env.production'] })
 
-const CSV_FILE_PATH = path.resolve(path.join(__dirname, '../data/earthquakes1970-2014.csv'));
-const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_NAME = process.env.MONGODB_NAME;
+const CSV_FILE_PATH = path.resolve(path.join(__dirname, '../data/earthquakes1970-2014.csv'))
+const MONGODB_URI = process.env.MONGODB_URI
+const MONGODB_NAME = process.env.MONGODB_NAME
 
 interface Earthquake {
   location: string;
@@ -25,30 +25,30 @@ interface CsvRow {
 }
 
 async function insertEarthquakeData() {
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI)
 
   try {
-    await client.connect();
-    const db = client.db(MONGODB_NAME);
-    const collection = db.collection('earthquakes');
-    const earthquakes = await parseCsvFile(CSV_FILE_PATH);
+    await client.connect()
+    const db = client.db(MONGODB_NAME)
+    const collection = db.collection('earthquakes')
+    const earthquakes = await parseCsvFile(CSV_FILE_PATH)
 
     if (earthquakes.length > 0) {
-      const result = await collection.insertMany(earthquakes);
-      console.log(`Inserted ${result.insertedCount} earthquake records into MongoDB`);
+      const result = await collection.insertMany(earthquakes)
+      console.log(`Inserted ${result.insertedCount} earthquake records into MongoDB`)
     } else {
-      console.log('No data found to insert');
+      console.log('No data found to insert')
     }
   } catch (error) {
-    console.error('Error during migration:', error);
+    console.error('Error during migration:', error)
   } finally {
-    await client.close();
+    await client.close()
   }
 }
 
 function parseCsvFile(filePath: string): Promise<Earthquake[]> {
   return new Promise((resolve, reject) => {
-    const earthquakes: Earthquake[] = [];
+    const earthquakes: Earthquake[] = []
 
     fs.createReadStream(filePath)
       .pipe(csv())
@@ -57,17 +57,17 @@ function parseCsvFile(filePath: string): Promise<Earthquake[]> {
           location: `${row.Latitude}, ${row.Longitude}`,
           magnitude: parseFloat(row.Magnitude),
           date: new Date(row.DateTime),
-        };
-        earthquakes.push(earthquake);
+        }
+        earthquakes.push(earthquake)
       })
       .on('end', () => {
-        console.log('CSV file successfully processed');
-        resolve(earthquakes);
+        console.log('CSV file successfully processed')
+        resolve(earthquakes)
       })
       .on('error', (error: never) => {
-        reject(error);
-      });
-  });
+        reject(error)
+      })
+  })
 }
 
-insertEarthquakeData();
+insertEarthquakeData()

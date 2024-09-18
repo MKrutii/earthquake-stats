@@ -1,14 +1,14 @@
-import { Earthquake } from '@/types/earthquake';
-import { CellContext } from '@tanstack/react-table';
-import { useDeleteEarthquakeMutation, useUpdateEarthquakeMutation } from '@/graphql/earthquake';
-import ManageEarthquakeDialog from '@/components/Dialogs/ManageEarthquakeDialog';
+import { Earthquake } from '@/types/earthquake'
+import { CellContext } from '@tanstack/react-table'
+import { useDeleteEarthquakeMutation, useUpdateEarthquakeMutation } from '@/graphql/earthquake'
+import ManageEarthquakeDialog from '@/components/Dialogs/ManageEarthquakeDialog'
 
 interface ActionCell {
   cellInfo: CellContext<Earthquake, unknown>
 }
 
 export default function ActionsCell({ cellInfo }: ActionCell) {
-  const id = cellInfo.getValue() as string;
+  const id = cellInfo.getValue() as string
 
   const [deleteEarthquake, { loading: isDeleteLoading }] = useDeleteEarthquakeMutation()
   const [updateEarthquake] = useUpdateEarthquakeMutation()
@@ -18,7 +18,7 @@ export default function ActionsCell({ cellInfo }: ActionCell) {
       await deleteEarthquake({
         variables: { id },
         update(cache) {
-          cache.evict({ id: `Earthquake:${id}` });
+          cache.evict({ id: `Earthquake:${id}` })
         },
       })
     } catch (error) {
@@ -85,5 +85,5 @@ export default function ActionsCell({ cellInfo }: ActionCell) {
         </svg>
       </button>
     </div>
-  );
+  )
 }

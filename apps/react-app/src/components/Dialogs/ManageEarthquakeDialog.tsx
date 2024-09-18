@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
-import { Earthquake } from '@/types/earthquake';
-import FormControl from '@/components/Dialogs/FormControl';
+import React, { useRef, useEffect, ReactNode } from 'react'
+import { useForm } from 'react-hook-form'
+import { Earthquake } from '@/types/earthquake'
+import FormControl from '@/components/Dialogs/FormControl'
 
 interface ManageEarthquakeDialogProps {
   onSubmit: (data: Earthquake) => void;
@@ -10,7 +10,7 @@ interface ManageEarthquakeDialogProps {
 }
 
 const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEarthquakeDialogProps) => {
-  const editDialogRef = useRef<HTMLDialogElement>(null);
+  const editDialogRef = useRef<HTMLDialogElement>(null)
 
   const {
     register,
@@ -18,7 +18,7 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
     setValue,
     reset,
     formState: { errors }
-  } = useForm<Earthquake>({ defaultValues });
+  } = useForm<Earthquake>({ defaultValues })
 
   useEffect(() => {
     if (defaultValues) {
@@ -26,10 +26,10 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
       setValue('magnitude', defaultValues.magnitude)
       setValue('date', defaultValues.date.split('T')[0])
     }
-  }, [defaultValues, setValue]);
+  }, [defaultValues, setValue])
 
   const handleFormSubmit = (data: Earthquake) => {
-    onSubmit(data);
+    onSubmit(data)
     closeDialog()
   }
 
@@ -39,8 +39,8 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
 
   const closeDialog = () => {
     if (!defaultValues) reset()
-    editDialogRef.current?.close();
-  };
+    editDialogRef.current?.close()
+  }
 
   return (
     <>
@@ -116,7 +116,7 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
         </div>
       </dialog>
     </>
-  );
-};
+  )
+}
 
 export default ManageEarthquakeDialog

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from 'react'
 import {
   ColumnDef,
   flexRender,
@@ -9,14 +9,14 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from '@tanstack/react-table'
 
-import { useEarthquakeData } from '@/components/Providers/EarthquakeDataProvider';
-import { Earthquake } from '@/types/earthquake';
-import ActionsCell from '@/components/Table/ActionsCell';
+import { useEarthquakeData } from '@/components/Providers/EarthquakeDataProvider'
+import { Earthquake } from '@/types/earthquake'
+import ActionsCell from '@/components/Table/ActionsCell'
 
 export default function TableComponent() {
-  const { earthquakes, isLoading } = useEarthquakeData();
+  const { earthquakes, isLoading } = useEarthquakeData()
   const columns = useMemo<ColumnDef<Earthquake>[]>(
     () => [
       {
@@ -37,13 +37,13 @@ export default function TableComponent() {
         accessorKey: 'date',
         header: 'Date',
         cell: (info) => {
-          const dateValue = info.getValue() as string;
-          const date: Date = new Date(dateValue);
+          const dateValue = info.getValue() as string
+          const date: Date = new Date(dateValue)
 
           return new Intl.DateTimeFormat('en-US', {
             dateStyle: 'medium',
             timeStyle: 'medium',
-          }).format(date);
+          }).format(date)
         },
         footer: (props) => props.column.id,
         enableColumnFilter: false,
@@ -57,7 +57,7 @@ export default function TableComponent() {
       },
     ],
     []
-  );
+  )
 
   const table = useReactTable({
     data: earthquakes,
@@ -68,9 +68,9 @@ export default function TableComponent() {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
-  });
+  })
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="overflow-x-auto">
@@ -160,8 +160,8 @@ export default function TableComponent() {
             type="number"
             defaultValue={table.getState().pagination.pageIndex + 1}
             onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              table.setPageIndex(page);
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              table.setPageIndex(page)
             }}
             className="input input-bordered w-20"
           />
@@ -169,5 +169,5 @@ export default function TableComponent() {
         <span>{table.getPrePaginationRowModel().rows.length} Rows</span>
       </div>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag';
+import { gql } from 'graphql-tag'
 
 export default gql`
   type Earthquake {
@@ -17,4 +17,4 @@ export default gql`
     updateEarthquake(id: ID!, location: String, magnitude: Float, date: Date): Earthquake
     deleteEarthquake(id: ID!): Boolean!
   }
-`;
+`

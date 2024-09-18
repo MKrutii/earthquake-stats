@@ -1,6 +1,6 @@
-import NavBar from '@/components/NavBar';
-import TableComponent from '@/components/Table/TableComponent';
-import AddEventSection from '@/components/AddEventSection';
+import NavBar from '@/components/NavBar'
+import TableComponent from '@/components/Table/TableComponent'
+import AddEventSection from '@/components/AddEventSection'
 
 export function Index() {
   return (
@@ -18,7 +18,7 @@ export function Index() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Index;
+export default Index

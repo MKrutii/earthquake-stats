@@ -1,8 +1,8 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import Providers from '@/components/Providers/Providers';
+import { AppProps } from 'next/app'
+import Head from 'next/head'
+import Providers from '@/components/Providers/Providers'
 
-import '@/styles/globals.css';
+import '@/styles/globals.css'
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +16,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         </Providers>
       </main>
     </>
-  );
+  )
 }
 
-export default CustomApp;
+export default CustomApp

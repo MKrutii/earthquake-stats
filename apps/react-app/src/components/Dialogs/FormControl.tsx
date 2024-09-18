@@ -1,6 +1,6 @@
-import { Earthquake } from '@/types/earthquake';
-import React, { InputHTMLAttributes } from 'react';
-import { FieldErrors } from 'react-hook-form';
+import React, { InputHTMLAttributes } from 'react'
+import { Earthquake } from '@/types/earthquake'
+import { FieldErrors } from 'react-hook-form'
 
 interface FormControlProps {
   name: keyof Earthquake
@@ -23,6 +23,6 @@ const FormControl = ({ inputProps, name, errors }: FormControlProps) => (
       <span className="text-red-500">{errors[name]?.message}</span>
     )}
   </div>
-);
+)
 
 export default FormControl

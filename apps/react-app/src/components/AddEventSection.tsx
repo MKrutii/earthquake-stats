@@ -1,9 +1,9 @@
-import ManageEarthquakeDialog from '@/components/Dialogs/ManageEarthquakeDialog';
-import { useCreateEarthquakeMutation } from '@/graphql/earthquake';
-import { Earthquake } from '@/types/earthquake';
+import ManageEarthquakeDialog from '@/components/Dialogs/ManageEarthquakeDialog'
+import { useCreateEarthquakeMutation } from '@/graphql/earthquake'
+import { Earthquake } from '@/types/earthquake'
 
 export default function AddEventSection() {
-  const [createEarthquake, { loading }] = useCreateEarthquakeMutation()
+  const [createEarthquake] = useCreateEarthquakeMutation()
 
   const handleCreate = async (values: Earthquake) => {
     try {
