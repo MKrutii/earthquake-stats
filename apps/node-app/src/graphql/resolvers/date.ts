@@ -4,10 +4,10 @@ export default {
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'Custom scalar type for Date',
-    parseValue(value: any) {
+    parseValue(value: Date) {
       return new Date(value)
     },
-    serialize(value: any) {
+    serialize(value: Date) {
       return value instanceof Date ? value.toISOString() : null
     },
     parseLiteral(ast) {

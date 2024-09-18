@@ -10,7 +10,13 @@ interface EarthquakeDataProviderValue {
   earthquakes: Array<Earthquake>
 }
 
-const EarthquakeDataContext: React.Context<any> = React.createContext({})
+const defaultValue: EarthquakeDataProviderValue = {
+  isLoading: false,
+  hasError: false,
+  earthquakes: [],
+}
+
+const EarthquakeDataContext: React.Context<EarthquakeDataProviderValue> = React.createContext(defaultValue)
 export const useEarthquakeData: () => EarthquakeDataProviderValue = () => useContext(EarthquakeDataContext)
 
 export default function EarthquakeDataProvider({ children }: PropsWithChildren) {

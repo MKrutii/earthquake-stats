@@ -8,8 +8,10 @@ import { EarthquakeDataSource } from './dataSources/EarthquakeDataSource'
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/types/typeDefs'
 
-interface Context {
-  dataSources?: typeof EarthquakeDataSource;
+export interface Context {
+  dataSources: {
+    earthquakeDataSource: EarthquakeDataSource
+  }
 }
 
 const PORT = process.env.PORT || 4000

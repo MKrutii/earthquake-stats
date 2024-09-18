@@ -1,7 +1,7 @@
 import { MongoClient, Db, ObjectId, OptionalId } from 'mongodb'
 
 export interface Earthquake {
-  id: string;
+  id?: string;
   location: string;
   magnitude: number;
   date: Date;
