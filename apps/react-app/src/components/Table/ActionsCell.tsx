@@ -31,7 +31,6 @@ export default function ActionsCell({ cellInfo }: ActionCell) {
       await updateEarthquake({
         variables: values,
         update(cache, { data: { updateEarthquake } }) {
-          console.log(cache, updateEarthquake)
           cache.modify({
             id: `Earthquake:${id}`,
             fields: {
@@ -39,9 +38,9 @@ export default function ActionsCell({ cellInfo }: ActionCell) {
               magnitude: () =>updateEarthquake.magnitude,
               date: () => updateEarthquake.date,
             },
-          });
+          })
         },
-      });
+      })
     } catch (error) {
       console.error(error)
     }

@@ -16,6 +16,7 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors }
   } = useForm<Earthquake>({ defaultValues });
 
@@ -29,7 +30,7 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
 
   const handleFormSubmit = (data: Earthquake) => {
     onSubmit(data);
-    editDialogRef.current?.close()
+    closeDialog()
   }
 
   const openDialog = () => {
@@ -37,6 +38,7 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
   }
 
   const closeDialog = () => {
+    if (!defaultValues) reset()
     editDialogRef.current?.close();
   };
 
@@ -65,7 +67,11 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
                 inputProps={{
                   ...register('location', {
                     required: 'Location is required',
-                  })
+                    pattern: {
+                      value: /^-?\d+\.\d+,\s?-?\d+\.\d+$/,
+                      message: 'Must follow format "Longitude, Latitude"',
+                    },
+                  }),
                 }}
                 errors={errors}
               />
@@ -73,8 +79,8 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
               <FormControl
                 name={'magnitude'}
                 inputProps={{
-                  type:"number",
-                  step:"0.1",
+                  type: 'number',
+                  step: '0.1',
                   ...register('magnitude', {
                     required: 'Magnitude is required',
                     valueAsNumber: true,
@@ -82,7 +88,11 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
                       value: 0,
                       message: 'Magnitude must be a positive number',
                     },
-                  })
+                    max: {
+                      value: 12,
+                      message: 'Magnitude must be not exceed 12 level',
+                    },
+                  }),
                 }}
                 errors={errors}
               />
@@ -98,7 +108,9 @@ const ManageEarthquakeDialog = ({ onSubmit, defaultValues, children }: ManageEar
             </div>
 
             <div className="modal-action">
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </div>
           </form>
         </div>
